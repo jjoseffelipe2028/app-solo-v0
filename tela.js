@@ -237,6 +237,24 @@
   $("ver-rec").addEventListener("click", () => abrir("painel-rec"));
   $("ver-rel").addEventListener("click", () => abrir("painel-relatorio"));
   document.querySelectorAll("nav.abas button").forEach((b) => b.addEventListener("click", () => abrir(b.dataset.painel)));
+  // v0.2: manda o resumo direto (WhatsApp, Telegram...) pelo menu de compartilhar do celular
+  if (navigator.share) {
+    $("compartilhar").hidden = false;
+    $("compartilhar").addEventListener("click", async () => {
+      const txt = $("texto-copia").value;
+      if (!txt) { aviso("Preencha o laudo primeiro."); return; }
+      try {
+        await navigator.share({ title: "App Solo: recomendação", text: txt });
+      } catch { /* a pessoa fechou o menu: nada a fazer */ }
+    });
+  }
+  // v0.2: PDF pelo próprio "imprimir" do aparelho (Salvar como PDF)
+  $("imprimir").addEventListener("click", () => {
+    if (!$("texto-copia").value) { aviso("Preencha o laudo primeiro."); return; }
+    $("data-impressao").textContent = new Date().toLocaleString("pt-BR");
+    window.print();
+  });
+
   $("copiar").addEventListener("click", async () => {
     const txt = $("texto-copia").value;
     if (!txt) { aviso("Preencha o laudo primeiro."); return; }

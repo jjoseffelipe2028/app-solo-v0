@@ -16,8 +16,9 @@
 </head>
 <body>
 <div class="casca">
+  <p class="so-impressao">App Solo v0.2 · relatório gerado em <span id="data-impressao"></span></p>
   <header class="topo">
-    <div class="marca"><h1>App Solo</h1><span class="cultura">Milho · Cerrado</span><span class="versao" id="versao">v0.1 (teste)</span></div>
+    <div class="marca"><h1>App Solo</h1><span class="cultura">Milho · Cerrado</span><span class="versao" id="versao">v0.2 (teste)</span></div>
     <p class="aviso-proto">Versão de teste. Não use na lavoura sem o agrônomo conferir.</p>
     <div class="instalar" id="caixa-instalar" hidden>
       <button class="botao-sec" type="button" id="instalar">📲 Instalar no aparelho</button>
@@ -110,7 +111,11 @@
       </div>
       <div class="bloco">
         <div class="tabela-rolagem"><table id="tab-rel"><thead><tr><th>Aplicação</th><th>Produto</th><th class="num">kg/ha</th></tr></thead><tbody></tbody></table></div>
-        <button class="botao-sec" type="button" id="copiar">Copiar resumo para o WhatsApp</button>
+        <div class="acoes-rel">
+          <button class="botao-grande" type="button" id="compartilhar" hidden>📤 Mandar no WhatsApp</button>
+          <button class="botao-sec" type="button" id="copiar">📋 Copiar resumo</button>
+          <button class="botao-sec" type="button" id="imprimir">🖨️ Salvar PDF / imprimir</button>
+        </div>
         <textarea id="texto-copia" rows="6" hidden aria-label="Resumo para copiar"></textarea>
       </div>
       <details class="bloco conferencia">

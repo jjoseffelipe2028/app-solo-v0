@@ -1,6 +1,6 @@
-# 🌱 App Solo v0.1 (teste)
+# 🌱 App Solo v0.2 (teste)
 
-Você digita os números do **laudo de análise de solo** e o app mostra, por hectare, **calcário, gesso, fósforo, potássio, micronutrientes e nitrogênio**, em adubo **convencional ou orgânico**.
+Você digita os números do **laudo de análise de solo** e o app mostra, por hectare, **calcário, gesso, fósforo, potássio, micronutrientes e nitrogênio**, em adubo **convencional ou orgânico**. O relatório vai **direto pro WhatsApp** ou vira **PDF**.
 
 - Celular e PC, **funciona sem internet** depois de instalado.
 - Base: **Embrapa Cerrados** (Circular Técnica 33/2016, Sousa & Lobato 2004, Vilela, Sousa e Silva 2002) e doses do agrônomo.

@@ -1,7 +1,7 @@
 // App Solo v0: guarda os arquivos do app no aparelho para funcionar SEM internet.
 // Trocou algum arquivo? Suba a VERSAO para os aparelhos baixarem a nova.
 "use strict";
-const VERSAO = "app-solo-v0.1";
+const VERSAO = "app-solo-v0.2";
 const ARQUIVOS = [
   "./", "index.html", "estilo.css", "calculos.js", "tela.js", "manifest.webmanifest",
   "icones/icone-192.png", "icones/icone-512.png", "icones/icone-maskable-512.png",
