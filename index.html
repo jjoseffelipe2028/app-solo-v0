@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- Trava: só arquivos do próprio app. Nada de fora, nada embutido. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; manifest-src 'self'; worker-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#2d6a3a">
+<meta name="description" content="Recomendação de calcário, gesso e adubos a partir do laudo de solo. Base Embrapa Cerrados. Funciona sem internet.">
+<title>App Solo</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icones/icone-192.png" type="image/png">
+<link rel="apple-touch-icon" href="icones/icone-192.png">
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="casca">
+  <header class="topo">
+    <div class="marca"><h1>App Solo</h1><span class="cultura">Milho · Cerrado</span><span class="versao" id="versao">v0.1 (teste)</span></div>
+    <p class="aviso-proto">Versão de teste. Não use na lavoura sem o agrônomo conferir.</p>
+    <div class="instalar" id="caixa-instalar" hidden>
+      <button class="botao-sec" type="button" id="instalar">📲 Instalar no aparelho</button>
+      <span class="sub">Fica como app e funciona sem internet.</span>
+    </div>
+  </header>
+
+  <main class="paineis">
+    <!-- ============ LAUDO ============ -->
+    <section class="painel ativo" id="painel-laudo" aria-label="Laudo">
+      <div>
+        <h2>1. Números do laudo</h2>
+        <p class="sub">Copie da folha do laboratório. Vírgula ou ponto, tanto faz. O último laudo fica salvo neste aparelho.</p>
+      </div>
+      <div class="exemplo"><span class="selo">Exemplo</span> laudo de exemplo, milho irrigado <button class="botao-sec" id="limpar" type="button">Limpar</button><button class="botao-sec" id="exemplo" type="button">Usar exemplo</button></div>
+
+      <div class="bloco">
+        <div class="bloco-titulo"><h3>Lavoura</h3></div>
+        <div class="escolha" role="group" aria-label="Sistema">
+          <button type="button" id="sis-irrigado" aria-pressed="true">💧 Irrigado</button>
+          <button type="button" id="sis-sequeiro" aria-pressed="false">☀️ Sequeiro</button>
+        </div>
+      </div>
+
+      <div class="bloco">
+        <div class="bloco-titulo"><h3>Acidez e CTC</h3><span class="camada">camada 0–20 cm</span></div>
+        <div class="campos tres">
+          <label class="campo"><span>SB</span><input type="text" inputmode="decimal" id="sb" autocomplete="off"><small>cmolc/dm³</small></label>
+          <label class="campo"><span>CTC (T)</span><input type="text" inputmode="decimal" id="t" autocomplete="off"><small>cmolc/dm³, pH 7</small></label>
+          <label class="campo"><span>Argila</span><input type="text" inputmode="decimal" id="argila" autocomplete="off"><small>%</small></label>
+          <label class="campo"><span>V% desejado</span><input type="text" inputmode="decimal" id="v2" autocomplete="off"><small>50% no milho</small></label>
+          <label class="campo"><span>PRNT</span><input type="text" inputmode="decimal" id="prnt" autocomplete="off"><small>% do calcário</small></label>
+        </div>
+      </div>
+
+      <div class="bloco">
+        <div class="bloco-titulo"><h3>Fósforo e potássio</h3><span class="camada">0–20 cm</span></div>
+        <div class="campos tres">
+          <label class="campo"><span>P (Mehlich-1)</span><input type="text" inputmode="decimal" id="p" autocomplete="off"><small>mg/dm³</small></label>
+          <label class="campo"><span>K</span><input type="text" inputmode="decimal" id="k" autocomplete="off"><small>mg/dm³</small></label>
+          <label class="campo"><span>P no plantio</span><input type="text" inputmode="decimal" id="pplantio" autocomplete="off"><small id="pplantio-faixa">kg P₂O₅/ha</small></label>
+        </div>
+      </div>
+
+      <div class="bloco">
+        <div class="bloco-titulo"><h3>Micronutrientes</h3><span class="camada">mg/dm³</span></div>
+        <div class="campos">
+          <label class="campo"><span>Boro (B)</span><input type="text" inputmode="decimal" id="b" autocomplete="off"></label>
+          <label class="campo"><span>Zinco (Zn)</span><input type="text" inputmode="decimal" id="zn" autocomplete="off"></label>
+          <label class="campo"><span>Cobre (Cu)</span><input type="text" inputmode="decimal" id="cu" autocomplete="off"></label>
+          <label class="campo"><span>Manganês (Mn)</span><input type="text" inputmode="decimal" id="mn" autocomplete="off"></label>
+        </div>
+      </div>
+
+      <div class="bloco">
+        <div class="bloco-titulo"><h3>Gesso</h3><span class="camada">camada 20–40 cm</span></div>
+        <label class="linha-check"><input type="checkbox" id="tem-sub"> Tenho análise de 20–40 cm</label>
+        <div class="campos" id="campos-sub" hidden>
+          <label class="campo"><span>Cálcio (Ca)</span><input type="text" inputmode="decimal" id="ca-sub" autocomplete="off"><small>cmolc/dm³</small></label>
+          <label class="campo"><span>Saturação Al</span><input type="text" inputmode="decimal" id="al-sub" autocomplete="off"><small>%</small></label>
+        </div>
+        <label class="campo"><span>Fator do gesso</span>
+          <select id="fator"><option value="75">75 × argila (usado pelo agrônomo)</option><option value="50">50 × argila (alguns solos)</option></select>
+          <small>Qual usar ainda depende da resposta do agrônomo.</small></label>
+      </div>
+
+      <button class="botao-grande so-celular" type="button" id="ver-rec">Ver recomendação →</button>
+    </section>
+
+    <!-- ============ RECOMENDAÇÃO ============ -->
+    <section class="painel" id="painel-rec" aria-label="Recomendação">
+      <div>
+        <h2>2. Recomendação por hectare</h2>
+        <p class="sub" id="rec-resumo"></p>
+      </div>
+      <div class="alternar" role="group" aria-label="Tipo de adubo">
+        <button type="button" id="tipo-conv" aria-pressed="true">Convencional</button>
+        <button type="button" id="tipo-org" aria-pressed="false">Orgânico</button>
+      </div>
+      <div id="lista-rec"></div>
+      <p class="rodape-fonte">Base: Embrapa Cerrados. Sempre confira com seu agrônomo.</p>
+      <button class="botao-grande so-celular" type="button" id="ver-rel">Ver relatório →</button>
+    </section>
+
+    <!-- ============ RELATÓRIO ============ -->
+    <section class="painel" id="painel-relatorio" aria-label="Relatório">
+      <div>
+        <h2>3. Relatório</h2>
+        <p class="sub">Resumo para mandar no WhatsApp ou mostrar ao agrônomo.</p>
+      </div>
+      <div class="bloco">
+        <div class="tabela-rolagem"><table id="tab-rel"><thead><tr><th>Aplicação</th><th>Produto</th><th class="num">kg/ha</th></tr></thead><tbody></tbody></table></div>
+        <button class="botao-sec" type="button" id="copiar">Copiar resumo para o WhatsApp</button>
+        <textarea id="texto-copia" rows="6" hidden aria-label="Resumo para copiar"></textarea>
+      </div>
+      <details class="bloco conferencia">
+        <summary id="conf-titulo">Conferência com a planilha</summary>
+        <p class="sub">Com o laudo de exemplo, cada conta tem que bater com a planilha (tolerância ±0,1).</p>
+        <div class="tabela-rolagem"><table id="tab-conf"><thead><tr><th>Conta</th><th class="num">Planilha</th><th class="num">App</th><th></th></tr></thead><tbody></tbody></table></div>
+      </details>
+      <p class="rodape-fonte">Base: Embrapa Cerrados (Circular Técnica 33/2016, Sousa &amp; Lobato 2004, Vilela, Sousa e Silva 2002) e doses do agrônomo. Sempre confira com seu agrônomo.</p>
+    </section>
+  </main>
+</div>
+
+<nav class="abas" role="tablist" aria-label="Telas">
+  <button role="tab" id="aba-laudo" aria-selected="true" data-painel="painel-laudo">Laudo</button>
+  <button role="tab" id="aba-rec" aria-selected="false" data-painel="painel-rec">Recomendação</button>
+  <button role="tab" id="aba-rel" aria-selected="false" data-painel="painel-relatorio">Relatório</button>
+</nav>
+<div class="toast" id="toast" hidden></div>
+
+<script src="calculos.js"></script>
+<script src="tela.js"></script>
+</body>
+</html>

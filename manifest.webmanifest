@@ -1,0 +1,17 @@
+{
+  "name": "App Solo — análise de solo",
+  "short_name": "App Solo",
+  "description": "Calcário, gesso e adubos a partir do laudo de solo. Base Embrapa Cerrados. Funciona sem internet.",
+  "lang": "pt-BR",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f3f5ef",
+  "theme_color": "#2d6a3a",
+  "icons": [
+    { "src": "icones/icone-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icones/icone-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icones/icone-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

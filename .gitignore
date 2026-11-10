@@ -1,0 +1,4 @@
+# Nada de segredo aqui, mas por garantia:
+.env
+*.key
+node_modules/
